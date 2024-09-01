@@ -5284,8 +5284,7 @@ period,value,day_of_week,percentage_change,flag,run
 2018-01-02,6.24,Tuesday,69.106,UP,5
 2018-01-03,6.24,Wednesday,0.0,FLAT,1
 2018-01-04,4.65,Thursday,-25.481,DOWN,1
-2018-01-05,,Friday,0.0,FLAT,1
-2018-01-08,2.89,Monday,-37.849,DOWN,1
+2018-01-08,2.89,Monday,-37.849,DOWN,2
 2018-01-09,2.93,Tuesday,1.384,UP,1
 2018-01-10,3.16,Wednesday,7.85,UP,2
 2018-01-11,3.16,Thursday,0.0,FLAT,1
