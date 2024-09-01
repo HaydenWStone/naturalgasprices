@@ -1,5 +1,5 @@
 period,value,day_of_week,percentage_change,flag,run
-1997-01-07,3.82,Tuesday,,FLAT,1
+1997-01-07,3.82,Tuesday,0,FLAT,1
 1997-01-08,3.8,Wednesday,-0.524,DOWN,1
 1997-01-09,3.61,Thursday,-5.0,DOWN,2
 1997-01-10,3.92,Friday,8.587,UP,1
