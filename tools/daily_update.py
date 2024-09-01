@@ -127,6 +127,13 @@ updated_df['flag'] = updated_df['percentage_change'].apply(lambda x: 'UP' if x >
 # Calculate the "run" column
 updated_df['run'] = updated_df.groupby((updated_df['flag'] != updated_df['flag'].shift()).cumsum()).cumcount() + 1
 
+# Add a new column 'reversal' with 'NO'
+updated_df['reversal'] = 'NO'
+
+# Check for reversals using shifted data
+updated_df.loc[((updated_df['flag'].shift(1) == 'UP') & (updated_df['flag'] == 'DOWN')) |
+       ((updated_df['flag'].shift(1) == 'DOWN') & (updated_df['flag'] == 'UP')), 'reversal'] = 'YES'
+
 # Ensure the directory exists
 output_directory = '../data'
 if not os.path.exists(output_directory):
