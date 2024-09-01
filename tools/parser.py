@@ -1,8 +1,16 @@
 import pandas as pd
+import requests
+from io import StringIO
 
-# Load the CSV file
-file_path = 'henry_hub_prices.csv'
-df = pd.read_csv(file_path)
+# URL of the CSV file
+url = 'https://raw.githubusercontent.com/HaydenWStone/naturalgasprices/main/data/henry_hub_prices.csv'
+
+# Fetch the CSV file using requests
+response = requests.get(url)
+response.raise_for_status()  # Ensure the request was successful
+
+# Load the CSV data into a DataFrame
+df = pd.read_csv(StringIO(response.text))
 
 # Ensure the 'period' column is in datetime format
 df['period'] = pd.to_datetime(df['period'])
@@ -19,8 +27,12 @@ df['percentage_change'] = df['value'].pct_change().multiply(100).round(3)
 # Add a binary flag for "UP", "DOWN", or "FLAT" based on the percentage change
 df['flag'] = df['percentage_change'].apply(lambda x: 'UP' if x > 0 else ('DOWN' if x < 0 else 'FLAT'))
 
-# Save the updated DataFrame to a new CSV file (optional)
-df.to_csv('henry_hub_prices.csv', index=False)
+# Calculate the "run" column, which counts the number of successive previous days where the flag has been "UP" or "DOWN" continually
+df['run'] = df.groupby((df['flag'] != df['flag'].shift()).cumsum()).cumcount() + 1
 
-# Display the updated DataFrame
+# Save the updated DataFrame to the location one directory level higher
+output_file_path = '../data/henry_hub_prices.csv'
+df.to_csv(output_file_path, index=False)
+
+# Display the updated DataFrame (optional)
 print(df)
